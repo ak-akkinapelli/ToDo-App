@@ -8,6 +8,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    {/* wrapping App component in  chakra provider tag to apply chakra UI  */}
     <ChakraProvider>
       <ColorModeScript initialColorMode={"dark"} />
       <App />

@@ -1,14 +1,17 @@
 import { HStack, Button, Input } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
+import { FC } from "react";
 import { ChangeEvent } from "react";
 
-function TodoForm(props: any) {
+const TodoForm = (props) => {
   const [input, setInput] = useState<string>(
     props.edit ? props.edit.value : ""
   );
 
+  // used Useref hook to focus on input feild by default, to capture it's value
   const inputRef = useRef(null);
 
+  //useeffect to focus on input on load
   useEffect(() => {
     inputRef.current.focus();
   });
@@ -18,17 +21,21 @@ function TodoForm(props: any) {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    //to prevent reload on submit
     event.preventDefault();
-    
+
+    //assigning a unique id and input text value on submit
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input,
     });
+    //resetting input to empty string
     setInput("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="todo-form">
+    <form onSubmit={handleSubmit}>
+      {/* based on edit is true or not two different components are returned */}
       {props.edit ? (
         <HStack spacing={3}>
           <Input
@@ -38,8 +45,8 @@ function TodoForm(props: any) {
             onChange={handleChange}
             name="text"
             ref={inputRef}
-            className="todo-input edit"
           />
+          {/* Chakra UI submit button to update item  */}
           <Button type="submit" colorScheme={"pink"} px="8">
             Update
           </Button>
@@ -52,10 +59,10 @@ function TodoForm(props: any) {
             value={input}
             onChange={handleChange}
             name="text"
-            className="todo-input"
             ref={inputRef}
             type="text"
           />
+          {/* Chakra UI submit button to add item  */}
           <Button type="submit" colorScheme={"teal"} px="8">
             Add todo
           </Button>
@@ -63,6 +70,6 @@ function TodoForm(props: any) {
       )}
     </form>
   );
-}
+};
 
 export default TodoForm;

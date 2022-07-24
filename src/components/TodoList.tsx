@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import { useState, FC } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 import { ITodo } from "../interfaces";
 import { StackDivider, VStack, useToast } from "@chakra-ui/react";
 
-function TodoList() {
+const TodoList: FC = () => {
+  //Toast is a chakra UI component
   const toast = useToast();
   const [todos, setTodos] = useState<ITodo[]>([]);
 
   const addTodo = (todo: ITodo): void => {
+    //To avoid adding empty task
     if (!todo.text || /^\s*$/.test(todo.text)) {
+      //shows a toast woth description
       toast({
         title: "Cannot add empty TODO",
         description: "",
@@ -19,14 +22,15 @@ function TodoList() {
       });
       return;
     }
-
+    // creating a new temp array by adding new todo and spreading existing todos
     const newTodos = [todo, ...todos];
-
+    // updating todos
     setTodos(newTodos);
-    console.log(...todos);
   };
 
+  //editing existing todo
   const updateTodo = (todoId: number, newValue: ITodo): void => {
+    //to check if the todo is empty
     if (!newValue.text || /^\s*$/.test(newValue.text)) {
       return;
     }
@@ -35,21 +39,11 @@ function TodoList() {
       prev.map((item: ITodo) => (item.id === todoId ? newValue : item))
     );
   };
-
+  // this method deletes a todo item
   const removeTodo = (id: number): void => {
     const removedArr = [...todos].filter((todo) => todo.id !== id);
 
     setTodos(removedArr);
-  };
-
-  const completeTodo = (id: number): void => {
-    let updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
   };
 
   return (
@@ -64,14 +58,9 @@ function TodoList() {
       alignItems={"stretch"}
     >
       <TodoForm onSubmit={addTodo} />
-      <Todo
-        todos={todos}
-        completeTodo={completeTodo}
-        removeTodo={removeTodo}
-        updateTodo={updateTodo}
-      />
+      <Todo todos={todos} removeTodo={removeTodo} updateTodo={updateTodo} />
     </VStack>
   );
-}
+};
 
 export default TodoList;

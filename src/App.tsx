@@ -1,12 +1,15 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import TodoList from "./components/TodoList";
+//importing chakra UI components
 import { VStack, Heading, useColorMode, IconButton } from "@chakra-ui/react";
-import "./App.css";
+//importing icons from react icons library
 import { FaSun, FaMoon } from "react-icons/fa";
+
 const App: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <div className="App">
+    <div>
+      {/* VStack instead of Div tag for vertical stacking */}
       <VStack padding={5}>
         <IconButton
           icon={colorMode === "light" ? <FaSun /> : <FaMoon />}
