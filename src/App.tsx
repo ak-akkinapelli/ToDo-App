@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { FC } from "react";
+import TodoList from "./components/TodoList";
+import { VStack, Heading, useColorMode, IconButton } from "@chakra-ui/react";
+import "./App.css";
+import { FaSun, FaMoon } from "react-icons/fa";
+const App: FC = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <VStack padding={5}>
+        <IconButton
+          icon={colorMode === "light" ? <FaSun /> : <FaMoon />}
+          isRound={true}
+          size={"lg"}
+          alignSelf={"flex-end"}
+          onClick={toggleColorMode}
+          aria-label="mode"
+        />
+        <Heading
+          padding={10}
+          fontWeight={"extrabold"}
+          size="2xl"
+          bgGradient="linear(to-r, blue.300, teal.600)"
+          bgClip={"text"}
         >
-          Learn React
-        </a>
-      </header>
+          What's the Plan for Today?
+        </Heading>
+        <TodoList />
+      </VStack>
     </div>
   );
-}
+};
 
 export default App;
