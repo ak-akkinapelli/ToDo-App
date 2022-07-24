@@ -1,6 +1,5 @@
 import { HStack, Button, Input } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
-import { FC } from "react";
 import { ChangeEvent } from "react";
 
 const TodoForm = (props) => {
