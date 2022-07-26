@@ -4,7 +4,7 @@ A simple Todo App using React and TypeScript. Hosted the site on netlify.
 
 Dependencies:
 
-1. Chakra UI library for designed components.
+1. Chakra UI library for design components.
 2. React icons library for icons
 
 Theme: Supports both light and dark theme. Click on the sun icon on top right to toggle mode.
