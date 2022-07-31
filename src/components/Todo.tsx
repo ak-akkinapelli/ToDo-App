@@ -38,17 +38,17 @@ const Todo = ({ todos, removeTodo, updateTodo }) => {
   return todos.map((todo: ITodo, index: number) => (
     //Hstack is for aligning items horizontally
     <HStack key={index}>
-      <Text key={todo.id} pl="1" mt={"2"}>
-        {todo.text}
+      <Text key={todo?.id} pl="1" mt={"2"}>
+        {todo?.text}
       </Text>
       {/* add spacing using spacer  chakra UI component */}
       <Spacer />
       {/* font awesome icons in react icons module*/}
       <FaEdit
-        onClick={() => setEdit({ id: todo.id, value: todo.text })}
+        onClick={() => setEdit({ id: todo?.id, value: todo?.text })}
         cursor={"pointer"}
       />
-      <FaTrash onClick={() => removeTodo(todo.id)} cursor={"pointer"} />
+      <FaTrash onClick={() => removeTodo(todo?.id)} cursor={"pointer"} />
     </HStack>
   ));
 };

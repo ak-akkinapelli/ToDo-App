@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 import { ITodo } from "../interfaces";
@@ -7,7 +7,22 @@ import { StackDivider, VStack, useToast } from "@chakra-ui/react";
 const TodoList: FC = () => {
   //Toast is a chakra UI component
   const toast = useToast();
-  const [todos, setTodos] = useState<ITodo[]>([]);
+
+  const [todos, setTodos] = useState<ITodo[]>(() => {
+    // get the todos from localstorage
+    const savedTodos = localStorage.getItem("todos");
+    // if there are todos stored
+    if (savedTodos) {
+      // return the parsed JSON object back to a javascript object
+      return JSON.parse(savedTodos);
+    }
+    // return an empty array
+    else return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (todo: ITodo): void => {
     //To avoid adding empty task
@@ -41,7 +56,7 @@ const TodoList: FC = () => {
   };
   // this method deletes a todo item
   const removeTodo = (id: number): void => {
-    const removedArr = [...todos].filter((todo) => todo.id !== id);
+    const removedArr = [...todos].filter((todo) => todo?.id !== id);
 
     setTodos(removedArr);
   };
